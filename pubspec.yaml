@@ -28,6 +28,9 @@ dependencies:
   transparent_image: ^1.0.0
   cached_network_image: ^0.8.0
   intl: ^0.15.8
+  google_maps_flutter: ^0.5.19+2
+  geolocator: '^5.0.0'
+  
 
 dev_dependencies:
   flutter_test:

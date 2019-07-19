@@ -1,3 +1,5 @@
+import '../models/request.dart';
+import '../models/user.dart';
 import '../models/category_products.dart';
 import '../models/menu.dart';
 import 'package:rxdart/rxdart.dart';
@@ -30,6 +32,14 @@ class BlocMenu {
   void open(){
     _listMenus = BehaviorSubject<List<Menu>>();
     _listCategories = BehaviorSubject<List<CategoryProducts>>();
+  }
+
+  Future<Request> registerUser(User user) async{
+    return await (apiService.insertUser(user));
+  }
+
+  Future login(String email, String pwd) async{
+    return await (apiService.login(email, pwd));
   }
 
   void dispose(){

@@ -14,10 +14,18 @@ import '../widgets/rowCant.dart';
 class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      appBar: CupertinoNavigationBar(
+        leading: Icon(CupertinoIcons.create),
+        middle: Text('Menu'),
+        trailing: Icon(CupertinoIcons.gear_solid),
+      ),
+      body: CategoriesView(),
+    );
+    /*return Container(
       height: MediaQuery.of(context).size.height,
       child: CategoriesView(),
-    );
+    );*/
      
   }
 }

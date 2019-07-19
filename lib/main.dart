@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:products_material/ui/widgets/MainView.dart';
 import 'package:flutter/services.dart';
-
+import 'package:products_material/ui/widgets/locationMap.dart';
+import 'ui/widgets/form_login.dart';
 import 'ui/widgets/form_register.dart';
 void main() => runApp(MyApp());
 
@@ -31,7 +32,8 @@ class _NavigatorBarState extends State<_NavigatorBar> {
   List<Widget> _widgetOptions = <Widget>[
     MainView(),
     FormRegister(),//page 2
-    Text('hola'),//pague 3
+    LocationMap(),//pague 3
+    FormLogin(),
   ];
 
   void _onTapped(int index){
@@ -43,18 +45,6 @@ class _NavigatorBarState extends State<_NavigatorBar> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: CupertinoNavigationBar(
-        leading: Icon(CupertinoIcons.create),
-        middle: Text('Menu'),
-        trailing: Icon(CupertinoIcons.gear_solid),
-      ),
-      /*appBar: AppBar(
-        leading: Icon(CupertinoIcons.create),
-        title: Text('Menu'),
-        actions: <Widget>[
-          Icon(Icons.menu)
-        ],
-      ),*/
       body: _widgetOptions.elementAt(_selected),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -64,7 +54,7 @@ class _NavigatorBarState extends State<_NavigatorBar> {
             title: Text('home'),
             ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person, color: Colors.red,),
+            icon: Icon(CupertinoIcons.person_add, color: Colors.red,),
             activeIcon: Icon(CupertinoIcons.person, color: Colors.redAccent),
             title: Text('user'),
             ),
@@ -72,6 +62,11 @@ class _NavigatorBarState extends State<_NavigatorBar> {
             icon: Icon(CupertinoIcons.play_arrow, color: Colors.red,),
             activeIcon: Icon(CupertinoIcons.play_arrow, color: Colors.redAccent), 
             title: Text('settings'),
+            ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person, color: Colors.red,),
+            activeIcon: Icon(CupertinoIcons.play_arrow, color: Colors.redAccent), 
+            title: Text('Login'),
             ),
         ],
         currentIndex: _selected,
