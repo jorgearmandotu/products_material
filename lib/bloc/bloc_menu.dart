@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../models/request.dart';
 import '../models/user.dart';
 import '../models/category_products.dart';
@@ -38,8 +40,8 @@ class BlocMenu {
     return await (apiService.insertUser(user));
   }
 
-  Future login(String email, String pwd) async{
-    return await (apiService.login(email, pwd));
+  Future<Request> login(String email, String pwd, BuildContext context) async{
+    return await apiService.login(email, pwd, context);
   }
 
   void dispose(){

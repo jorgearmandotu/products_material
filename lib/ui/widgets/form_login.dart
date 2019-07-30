@@ -1,6 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:products_material/bloc/bloc_menu.dart';
+import 'package:products_material/main.dart';
+import 'package:products_material/models/request.dart';
+import 'package:products_material/provider/user_provider.dart';
+import 'package:products_material/ui/widgets/MainView.dart';
+import 'package:provider/provider.dart';
 import './helper/borders.dart';
 
 class FormLogin extends StatelessWidget {
@@ -55,6 +61,7 @@ class _LoginState extends State<Login> {
   }
 
   Widget formLogin(){
+    final _us = Provider.of<UserProvider>(context);
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       children: <Widget>[
@@ -74,9 +81,6 @@ class _LoginState extends State<Login> {
             }
             RegExp emailUnicode = RegExp(r'/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
             RegExp email =  RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
-            print(emailUnicode.hasMatch(value.toString()));
-            print(email.hasMatch(value.toString()));
-            print(value.toString());
             if(email.hasMatch(value.toString()) == false){
               return 'Ingrese Email Valido';
             }
@@ -101,11 +105,21 @@ class _LoginState extends State<Login> {
           child: Text('Ingresar', style: TextStyle(color: Colors.white),),
           color: Colors.lightBlue,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-          onPressed: (){
+          onPressed: ()async{
             //loguear
-            
+            String email = _email.text;
+            String pwd = _pwd.text;
+            Request res = await blocMenu.login(email, pwd, context);
+            if(res.status){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NavigatorBar())
+                );
+            } else {
+              return showDialog(context: context, builder: (context)=>AlertDialog(title: Text('Error'), content: Text(res.message),));
+            }
           },
-        )
+        ),
       ],
     );
   }

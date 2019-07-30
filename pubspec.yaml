@@ -30,6 +30,9 @@ dependencies:
   intl: ^0.15.8
   google_maps_flutter: ^0.5.19+2
   geolocator: '^5.0.0'
+  shared_preferences: ^0.5.3+4
+  flutter_secure_storage: ^3.2.1+1
+  provider: ^3.0.0+1
   
 
 dev_dependencies:

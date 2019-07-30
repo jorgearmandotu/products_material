@@ -1,5 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:products_material/helpers/saveDataUser.dart';
+import 'package:products_material/models/login_model.dart';
 import 'package:products_material/models/request.dart' as prefix0;
+import 'package:products_material/provider/user_provider.dart';
+import 'package:provider/provider.dart';
 import '../models/menu.dart';
 import '../models/category_products.dart';
 import '../models/user.dart';
@@ -69,12 +74,25 @@ class ApiService {
     }
   }
 
-  Future login(String email, String pwd) async {
-    print('login');
-    final response = await http.post('https://www.desarrollodeapis.com/apirest/login.php', body: {email:email, pwd:pwd});
-    print(response.body);
+  Future<prefix0.Request> login(String email, String pwd, BuildContext context) async {
+    //Map<String, dynamic> data = new Map();
+    //data = {'email':email, 'pwd':pwd};
+    final response = await http.post('https://www.desarrollodeapis.com/apirest/login.php', body: {'email':email, 'pwd':pwd});
     if(response.statusCode == 200){
       //guardar token e incluirlo en el header :)
+      //Map<String, dynamic> res = jsonDecode(response.body);
+      //String d = '[${response.body}]';
+      //List<LoginModel> data = loginFromJson(d);
+      LoginModel data = loginUniqueFromJson(response.body);
+      //print(dataUser.getEmail());
+      var res = await dataUser.setdata(data);
+      if(res){
+        final _us = Provider.of<UserProvider>(context);
+        _us.setuserProvider(data);
+        return Request(status: true, message: 'Login exitoso');
+      }else{
+        return Request(status: false, message: 'No se pudo guardar datos');
+      }
     }else if(response.statusCode == 400){
       return new prefix0.Request(status: false, message: response.body);
     }else{
@@ -82,4 +100,21 @@ class ApiService {
     }
   }
 
+  Future<Request> dataProfile() async{
+    String token =dataUser.getToken();
+    final response = await http.post('https://www.desarrollodeapis.com/apirest/profile.php', headers: {'jwt':token},);
+    if(response.statusCode == 200){
+      //List<User> data = userFromJson(response.body);
+      print(token);
+      print(response.body);
+    }
+  }
+
 }
+
+/*500 (server issue)
+401 (token auth missing or incorrect or no such credentials any more)
+404 (missing resource)
+403 (authenticated but insufficient permission for action )
+405 (method not allowed — when you try to access a POST with a GET etc.)
+400 (bad request — for example if you don’t submit username and password fields to login)*/

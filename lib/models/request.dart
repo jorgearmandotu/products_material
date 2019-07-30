@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:products_material/models/login_model.dart';
+
 List<Request> requestFromJson(String str) => new List<Request>.from(json.decode(str).map((x) => Request.fromJson(x)));
 
 String requestToJson(List<Request> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
@@ -10,7 +12,7 @@ class Request {
 
   Request({
     this.status,
-    this.message
+    this.message,
   });
 
   factory Request.fromJson(Map<String, dynamic> json) => new Request(

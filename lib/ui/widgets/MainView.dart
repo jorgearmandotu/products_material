@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:products_material/helpers/saveDataUser.dart';
 import 'package:products_material/ui/widgets/descriptionHero.dart';
+import 'package:products_material/ui/widgets/drawer_user.dart';
 import '../../models/menu.dart';
 import '../../models/category_products.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -21,6 +23,7 @@ class MainView extends StatelessWidget {
         trailing: Icon(CupertinoIcons.gear_solid),
       ),
       body: CategoriesView(),
+      
     );
     /*return Container(
       height: MediaQuery.of(context).size.height,
