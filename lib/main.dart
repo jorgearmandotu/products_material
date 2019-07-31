@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:products_material/helpers/saveDataUser.dart';
 import 'package:products_material/provider/user_provider.dart';
 import 'package:products_material/ui/widgets/MainView.dart';
-import 'package:flutter/services.dart';
 import 'package:products_material/ui/widgets/detailsUser.dart';
 import 'package:products_material/ui/widgets/drawer_user.dart';
 import 'package:products_material/ui/widgets/locationMap.dart';
 import 'package:provider/provider.dart';
-import 'models/login_model.dart';
 import 'ui/widgets/form_login.dart';
 import 'ui/widgets/form_register.dart';
 void main() => runApp(MyApp());

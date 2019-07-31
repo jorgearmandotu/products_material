@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:products_material/bloc/bloc_menu.dart';
 import 'package:products_material/main.dart';
 import 'package:products_material/models/request.dart';
-import 'package:products_material/provider/user_provider.dart';
-import 'package:products_material/ui/widgets/MainView.dart';
-import 'package:provider/provider.dart';
 import './helper/borders.dart';
 
 class FormLogin extends StatelessWidget {
@@ -61,7 +58,6 @@ class _LoginState extends State<Login> {
   }
 
   Widget formLogin(){
-    final _us = Provider.of<UserProvider>(context);
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       children: <Widget>[
@@ -79,11 +75,11 @@ class _LoginState extends State<Login> {
             if(value.isEmpty){
               return 'Ingrese datos validos';
             }
-            RegExp emailUnicode = RegExp(r'/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
             RegExp email =  RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
             if(email.hasMatch(value.toString()) == false){
               return 'Ingrese Email Valido';
             }
+            return null;
           },
         ),
         TextFormField(//pwd
@@ -99,6 +95,7 @@ class _LoginState extends State<Login> {
           obscureText: true,
           validator: (value){
             if(value.isEmpty) return 'Ingrese Contraseña';
+            return null;
           },
         ),
         RaisedButton(

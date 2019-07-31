@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:products_material/models/user.dart';
 import 'package:products_material/services/api_service.dart';
 
 class DetailsUser extends StatelessWidget {
@@ -27,12 +28,21 @@ class _DetailsState extends State<Details> {
   String city= 'DUMY';
   String adress= 'DUMY';
   String indications= 'DUMY';
-  String id;
+  String id = 'Dumy';
   ApiService apiservice = new ApiService();
   @override
   void initState() {
-    // TODO: implement initState
-    apiservice.dataProfile();
+    apiservice.dataProfile().then((data){
+      if(data != null){
+      name = data.name;
+      email = data.email;
+      phone = data.phone;
+      city = data.city;
+      adress = data.adress;
+      indications = data.indications;
+      id = data.id;
+    }
+    });
     super.initState();
   }
   @override
@@ -45,7 +55,7 @@ class _DetailsState extends State<Details> {
         Text(city),
         Text(adress),
         Text(indications),
-        Text(id),
+        //Text(id),
       ],
     );
   }

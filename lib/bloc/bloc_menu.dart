@@ -8,7 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import '../services/api_service.dart';
 
 class BlocMenu {
-  ApiService apiService = new ApiService();
+  ApiService _apiService = new ApiService();
   BehaviorSubject<List<Menu>> _listMenus = BehaviorSubject<List<Menu>>();
   Observable<List<Menu>> get allMenu => _listMenus.stream;
 
@@ -19,15 +19,15 @@ class BlocMenu {
     if(idMenu != null){
 
     }else{
-      if( await apiService.statusConecction()){
-        _listMenus.sink.add(await apiService.getMenu());
+      if( await _apiService.statusConecction()){
+        _listMenus.sink.add(await _apiService.getMenu());
       }
     }
   }
 
   fetchAllCategories() async {
-    if(await apiService.statusConecction()){
-      _listCategories.sink.add(await apiService.getCategories());
+    if(await _apiService.statusConecction()){
+      _listCategories.sink.add(await _apiService.getCategories());
     }
   }
 
@@ -37,11 +37,11 @@ class BlocMenu {
   }
 
   Future<Request> registerUser(User user) async{
-    return await (apiService.insertUser(user));
+    return await (_apiService.insertUser(user));
   }
 
   Future<Request> login(String email, String pwd, BuildContext context) async{
-    return await apiService.login(email, pwd, context);
+    return await _apiService.login(email, pwd, context);
   }
 
   void dispose(){

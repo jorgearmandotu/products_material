@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:products_material/helpers/saveDataUser.dart';
-import 'package:products_material/models/login_model.dart';
 import 'package:products_material/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 

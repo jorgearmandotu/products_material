@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:products_material/models/login_model.dart';
 
 List<Request> requestFromJson(String str) => new List<Request>.from(json.decode(str).map((x) => Request.fromJson(x)));
 

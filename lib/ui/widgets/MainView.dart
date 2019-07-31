@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:products_material/helpers/saveDataUser.dart';
 import 'package:products_material/ui/widgets/descriptionHero.dart';
-import 'package:products_material/ui/widgets/drawer_user.dart';
 import '../../models/menu.dart';
 import '../../models/category_products.dart';
-import 'package:transparent_image/transparent_image.dart';
-import 'package:intl/intl.dart';
 import '../../bloc/bloc_menu.dart';
 import 'dart:async';
 import '../../helpers/helperFormat.dart';
@@ -210,7 +206,6 @@ class ListMenuState extends State<ListMenu>{
   }
 
   Widget dialogDescription(Menu plato){
-    int cantidad = 1;
     return CupertinoAlertDialog(
       title: Text(plato.name),
       content: Column(
@@ -267,7 +262,7 @@ class _DialogPedidoState extends State<DialogPedido> {
   }
   
   @override
-  Widget build(BuildContext) {
+  Widget build(context) {
     return CupertinoAlertDialog(
       title: Text(plato.name),
       content: Column(

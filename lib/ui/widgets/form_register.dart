@@ -4,9 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:products_material/bloc/bloc_menu.dart';
-import 'package:products_material/models/request.dart' as prefix0;
 import 'package:products_material/models/user.dart';
-import 'package:products_material/models/Request.dart';
 import 'package:products_material/ui/widgets/form_login.dart';
 import './helper/borders.dart';
 
@@ -94,6 +92,7 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
             if(value.isEmpty){
               return 'ingrese nombre';
             }
+            return null;
           }
         ),
         TextFormField(//identificacion para factura
@@ -108,6 +107,7 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
           ),
           validator: (value){
             if(value.isEmpty) return 'Ingrese Numero de Identificación';
+            return null;
           },
         ),
         TextFormField(//telefono
@@ -123,6 +123,7 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
           ),
           validator: (value){
             if(value.isEmpty) return 'Ingrese Numero de Telefono';
+            return null;
           },
         ),
         TextFormField(//email
@@ -140,12 +141,11 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
             if(value.isEmpty){
               return 'Ingrese datos validos';
             }
-            RegExp emailUnicode = RegExp(r'/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
             RegExp email =  RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
             if(email.hasMatch(value.toString()) == false){
               return 'Ingrese Email Valido';
             }
-            
+            return null;
           },
         ),
         Row(
@@ -191,6 +191,7 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
               if(value.isEmpty){
                 return 'Ingrese datos validos';
               }
+              return null;
             },
         ),
         TextFormField(//complemento addres
@@ -217,6 +218,7 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
           obscureText: true,
           validator: (value){
             if(value.isEmpty) return 'Ingrese Contraseña';
+            return null;
           },
         ),
         CupertinoButton(

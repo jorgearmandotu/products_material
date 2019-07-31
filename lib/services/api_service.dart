@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:products_material/helpers/saveDataUser.dart';
 import 'package:products_material/models/login_model.dart';
-import 'package:products_material/models/request.dart' as prefix0;
 import 'package:products_material/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../models/menu.dart';
@@ -70,11 +69,11 @@ class ApiService {
       return new Request(status: false, message: response.body);
     }
     else{
-      return new prefix0.Request(status: false, message: 'status code: ${response.statusCode}, ${response.body}');
+      return new Request(status: false, message: 'status code: ${response.statusCode}, ${response.body}');
     }
   }
 
-  Future<prefix0.Request> login(String email, String pwd, BuildContext context) async {
+  Future<Request> login(String email, String pwd, BuildContext context) async {
     //Map<String, dynamic> data = new Map();
     //data = {'email':email, 'pwd':pwd};
     final response = await http.post('https://www.desarrollodeapis.com/apirest/login.php', body: {'email':email, 'pwd':pwd});
@@ -94,20 +93,23 @@ class ApiService {
         return Request(status: false, message: 'No se pudo guardar datos');
       }
     }else if(response.statusCode == 400){
-      return new prefix0.Request(status: false, message: response.body);
+      return new Request(status: false, message: response.body);
     }else{
-      return prefix0.Request(status: false, message:  'status code: ${response.statusCode}, ${response.body}');
+      return Request(status: false, message:  'status code: ${response.statusCode}, ${response.body}');
     }
   }
 
-  Future<Request> dataProfile() async{
-    String token =dataUser.getToken();
-    final response = await http.post('https://www.desarrollodeapis.com/apirest/profile.php', headers: {'jwt':token},);
+  Future<User> dataProfile() async{
+    String token = await dataUser.getToken();
+    
+    final response = await http.post('https://www.desarrollodeapis.com/apirest/profile.php',headers: {HttpHeaders.authorizationHeader:token});
     if(response.statusCode == 200){
-      //List<User> data = userFromJson(response.body);
-      print(token);
-      print(response.body);
+      User data = userUniqueFromJson(response.body);
+      return data;
+      //return Request(status: true, message: response.body);
     }
+    //return Request(status: false, message: 'No estas logeuado');
+    return null;
   }
 
 }
