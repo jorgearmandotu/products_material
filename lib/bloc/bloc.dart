@@ -1,7 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:products_material/bloc/transition.dart' as prefix0;
 import 'package:rxdart/rxdart.dart';
+import 'transition.dart';
+import 'bloc_supervisor.dart';
 
 abstract class Bloc <Event, State> {
   final PublishSubject<Event> _eventSubject = PublishSubject<Event>();
@@ -24,12 +27,15 @@ abstract class Bloc <Event, State> {
     _stateSubject.close();
   }
 
+  void onTransition(Transition<Event, State> transition) => null;
+
   void onError(Object error, StackTrace stackTrace) => null;
 
   void onEvent(Event event) => null;
 
   void dispatch(Event event){
     try {
+      BlocSupervisor.delegate.onEvent(this, event); 
       onEvent(event);
       _eventSubject.sink.add(event);
     } catch (error) {
@@ -47,20 +53,30 @@ abstract class Bloc <Event, State> {
   Stream<State> mapEventToState(Event event);
 
   void _bindStateSubject(){
-    Transform( 
+    Event currentEvent;
+    transform( 
       _eventSubject,
       (Event event) {
-        return mapEventToState(event).handleError(_handleError);
+        currentEvent = event;
+        return mapEventToState(currentEvent).handleError(_handleError);
       },
     ).forEach(
       (State nextState) {
         if(currentState == nextState || _stateSubject.isClosed) return;
+        final transition = prefix0.Transition(
+          currentState: currentState,
+          event: currentEvent,
+          nextState: nextState,
+        );
+        BlocSupervisor.delegate.onTransition(this, transition);
+        onTransition(transition);
         _stateSubject.sink.add(nextState);
       },
     );
   }
 
   void _handleError(Object error, [StackTrace stackTrace]) {
+    BlocSupervisor.delegate.onError(this, error, stackTrace);
     onError(error, stackTrace);
   }
 }

@@ -33,7 +33,7 @@ dependencies:
   shared_preferences: ^0.5.3+4
   flutter_secure_storage: ^3.2.1+1
   provider: ^3.0.0+1
-  
+  equatable: ^0.3.0
 
 dev_dependencies:
   flutter_test:
